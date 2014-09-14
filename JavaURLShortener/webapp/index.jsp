@@ -65,19 +65,25 @@ h1 {
 	background-color: #cd02bc;
 }
 
-#results {
+#result {
 	margin-top: 40px;
-	padding-left: 59px;
+	font-size: 130px;
+	width: 100%;
+	background-color: lightseagreen;
+	position: absolute;
+	left: 0;
+	text-align: center;
+	margin-top: 40px;
+	opacity: 0;
+	-webkit-transition: all 3s ease;
+	-moz-transition: all 3s ease;
+	-ms-transition: all 3s ease;
+	-o-transition: all 3s ease;
+	transition: all 3s ease;
 }
 
-#results ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-#results ul li {
-	float: left;
+#result.on {
+	opacity: 1;
 }
 
 .round {
@@ -100,10 +106,15 @@ h1 {
 					type="submit" value="shorten URL" />
 			</form>
 		</div>
-		<div id="results"></div>
+		<div id="result">testest</div>
 	</div>
 </body>
 <script>
 	
+	//test code
+	setTimeout(function() {
+		var result = document.querySelector("#result");
+		result.classList.add("on");
+	}, 1000);
 </script>
 </html>
