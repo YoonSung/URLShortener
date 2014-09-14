@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +51,16 @@ public class FrontController extends HttpServlet {
 			System.out.println("Ajax Request For URL Shorten");
 			
 			if (method == METHOD.POST) {
-				//TODO InsertRequest
 				
+				String originURL = request.getParameter("originURL");
+				
+				//TODO InsertRequest
+				System.out.println(originURL);
+				
+				response.setContentType("application/json");
+				
+				//TODO Return Shorten URL
+				out.print(originURL);
 				
 			} else if (method == METHOD.GET) {
 				request.getRequestDispatcher("/index.jsp").forward(request, response);

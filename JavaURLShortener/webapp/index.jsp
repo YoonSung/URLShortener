@@ -60,7 +60,7 @@ h1 {
 
 #result {
 	margin-top: 40px;
-	font-size: 130px;
+	font-size: 60px;
 	width: 100%;
 	background-color: lightseagreen;
 	position: absolute;
@@ -89,15 +89,45 @@ h1 {
 					type="submit" value="shorten URL" />
 			</form>
 		</div>
-		<div id="result">testest</div>
+		<div id="result"></div>
 	</div>
 </body>
 <script>
 	
-	//test code
+	var eResult = document.getElementById("result");
+	
+	function init() {
+		var eInput = document.getElementById("inputfield");
+		var eSubmit = document.querySelector("input[value][type='submit']");
+		eSubmit.addEventListener("click", function(e) {
+			e.preventDefault();
+			getShortenURL(eInput.value);
+		}.bind(this));		
+	}
+	
+	function getShortenURL(sLongURL) {
+		var xhr = new XMLHttpRequest();
+        xhr.open("post", "/", false);
+        
+        xhr.onload = function() {
+			console.log("test : ", xhr.responseText);
+			eResult.innerText = xhr.responseText;
+			if (!eResult.classList.contains("on")) {
+				eResult.classList.add("on");
+			}
+        };
+
+        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded; charset=UTF-8");
+        //xhr.load
+        xhr.send("originURL="+sLongURL);
+	}
+	
+	document.addEventListener("DOMContentLoaded", init.bind(this));
+	
+	/* //test code
 	setTimeout(function() {
 		var result = document.querySelector("#result");
 		result.classList.add("on");
-	}, 1000);
+	}, 1000); */
 </script>
 </html>
