@@ -27,14 +27,7 @@ h1 {
 	font-weight: normal;
 }
 
-.loading {
-	font-family: 'Francois One', sans-serif;
-	font-size: 2em;
-	padding-top: 30px;
-	text-align: center;
-}
-
-#searchfield {
+#inputfield {
 	border-radius: 10px;
 	border: none;
 	height: 40px;
@@ -85,24 +78,14 @@ h1 {
 #result.on {
 	opacity: 1;
 }
-
-.round {
-	width: 180px;
-	height: 180px;
-	border-radius: 90px;
-	margin-right: 20px;
-	background-size: cover;
-	background-repeat: no-repeat;
-	display: none;
-}
 </style>
 </head>
 <body>
 	<div id="wrapper">
 		<h1>Paste Your Long URL Here :)</h1>
-		<div id="search">
-			<form action="#" id="flickrSearch">
-				<input type="text" id="searchfield" /><input class="button"
+		<div>
+			<form action="#">
+				<input type="text" id="inputfield" /><input class="button"
 					type="submit" value="shorten URL" />
 			</form>
 		</div>
