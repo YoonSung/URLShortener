@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import redis.clients.jedis.Jedis;
+
 @SuppressWarnings("serial")
 public class FrontController extends HttpServlet {
+	private String RedisKey = "URLShortener";
 	
 	ArrayList<String> excludeList = new ArrayList<String>(Arrays.asList("/favicon.ico"));
 	enum METHOD {
@@ -55,25 +58,31 @@ public class FrontController extends HttpServlet {
 				String originURL = request.getParameter("originURL");
 				
 				//TODO InsertRequest
-				System.out.println(originURL);
-				
+				Jedis jedis = new Jedis("10.73.45.56");
+				long ShortenURL = jedis.hlen(RedisKey) + 1;
+				jedis.hset(RedisKey, String.valueOf(ShortenURL), originURL);
+				jedis.close();
 				response.setContentType("application/json");
 				
 				//TODO Return Shorten URL
-				out.print(originURL);
+				out.print(ShortenURL);
 				
 			} else if (method == METHOD.GET) {
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			}
 			
-		//Not Constructed URL Request
 		} else {
+			String ShortenURL = request.getRequestURI().substring(1);
+			Jedis jedis = new Jedis("10.73.45.56");
+			String result = jedis.hget(RedisKey, ShortenURL);
+			jedis.close();
 			
-			//TODO URL을 데이터베이스에서 가져온다. 해당 URL로 리다이렉트 시킨다
-			
-			//TODO 만약 데이터베이스에 존재하지 않는 URL일경우 
-			//잘못된 URL이라는 에러메세지를 보여주고 
-			//ROOT Path로 리다이렉트 시켜준다
+			if(result != null){
+				response.sendRedirect("http://" + result);
+			}else{
+				response.sendRedirect("/index.jsp");
+			}
+
 		}
 		
 		System.out.println(uri);
